@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
+const bcrypt = require('bcrypt');
 
 require('dotenv').config();
-
 
 // database connection
 const pool = new Pool({
@@ -17,7 +17,8 @@ const getUsers = (request, response) => {
     if (error) {
       throw error
     }
-    response.status(200).json(results.rows)
+    response.setHeader('Content-Type', 'application/json');
+    response.status(200).send(JSON.stringify(results.rows, null, 2));
   })
 }
 
@@ -32,32 +33,39 @@ const getUserById = (request, response) => {
   })
 }
 
-const createUser = (request, response) => {
-  const { name, email } = request.body
 
-  pool.query('INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *', [name, email], (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(201).send(`User added with ID: ${results.rows[0].id}`)
-  })
-}
-
-const updateUser = (request, response) => {
-  const id = parseInt(request.params.id)
-  const { name, email } = request.body
+const createUser = async (request, response) => {
+  const { name, email, password } = request.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   pool.query(
-    'UPDATE users SET name = $1, email = $2 WHERE id = $3',
-    [name, email, id],
+    'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id',
+    [name, email, hashedPassword],
     (error, results) => {
       if (error) {
-        throw error
+        throw error;
       }
-      response.status(200).send(`User modified with ID: ${id}`)
+      response.status(201).send(`User added with ID: ${results.rows[0].id}`);
     }
-  )
-}
+  );
+};
+
+const updateUser = async (request, response) => {
+  const id = parseInt(request.params.id);
+  const { name, email, password } = request.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  pool.query(
+    'UPDATE users SET name = $1, email = $2, password = $3 WHERE id = $4',
+    [name, email, hashedPassword, id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).send(`User modified with ID: ${id}`);
+    }
+  );
+};
 
 const deleteUser = (request, response) => {
   const id = parseInt(request.params.id)

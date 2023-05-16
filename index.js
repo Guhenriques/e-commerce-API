@@ -1,10 +1,17 @@
 // index.js server as the entry point of the application. Responsible for initializing. Keep it minimal and primarily responsible for starting the server.
 
 const express = require('express')
-//const bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 const app = express()
 const port = 3000
 const db = require('./queries')
+
+app.use(bodyParser.json())
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+)
 
 app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
