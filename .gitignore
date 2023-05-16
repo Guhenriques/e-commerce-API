@@ -1,0 +1,6 @@
+#Ignoring this files:
+
+*/node_modules
+
+*/.env
+
