@@ -1,12 +1,13 @@
 const client = require('../db');
 
 const index = (req, res, next) => {
-  client.query('SELECT * FROM products ORDER BY id ASC', (error, results) => {
+  const userId = parseInt(req.params.userId);
+
+  client.query('SELECT * FROM cart WHERE user_id = $1', [userId], (error, results) => {
     if (error) {
       next(error);
     } else {
-      res.type('application/json');
-      res.status(200).send(JSON.stringify(results.rows, null, 2));
+      res.status(200).json(results.rows);
     }
   });
 };
@@ -14,12 +15,12 @@ const index = (req, res, next) => {
 const show = (req, res, next) => {
   const id = parseInt(req.params.id);
 
-  client.query('SELECT * FROM products WHERE id = $1', [id], (error, results) => {
+  client.query('SELECT * FROM cart WHERE id = $1', [id], (error, results) => {
     if (error) {
       next(error);
     } else {
       if (results.rows.length === 0) {
-        res.status(404).json({ error: 'Product not found' });
+        res.status(404).json({ error: 'Cart item not found' });
       } else {
         res.status(200).json(results.rows[0]);
       }
@@ -28,11 +29,11 @@ const show = (req, res, next) => {
 };
 
 const create = (req, res, next) => {
-  const { name, category, quantity, price } = req.body;
+  const { user_id, product_id, quantity } = req.body;
 
   client.query(
-    'INSERT INTO products (name, category, quantity, price) VALUES ($1, $2, $3, $4) RETURNING id',
-    [name, category, quantity, price],
+    'INSERT INTO cart (user_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING id',
+    [user_id, product_id, quantity],
     (error, results) => {
       if (error) {
         next(error);
@@ -45,19 +46,19 @@ const create = (req, res, next) => {
 
 const update = (req, res, next) => {
   const id = parseInt(req.params.id);
-  const { name, category, quantity, price } = req.body;
+  const { product_id, quantity } = req.body;
 
   client.query(
-    'UPDATE products SET name = $1, category = $2, quantity = $3, price = $4 WHERE id = $5',
-    [name, category, quantity, price, id],
+    'UPDATE cart SET product_id = $1, quantity = $2 WHERE id = $3',
+    [product_id, quantity, id],
     (error, results) => {
       if (error) {
         next(error);
       } else {
         if (results.rowCount === 0) {
-          res.status(404).json({ error: 'Product not found' });
+          res.status(404).json({ error: 'Cart item not found' });
         } else {
-          res.status(200).json({ message: `Product modified with ID: ${id}` });
+          res.status(200).json({ message: `Cart item modified with ID: ${id}` });
         }
       }
     }
@@ -66,14 +67,18 @@ const update = (req, res, next) => {
 
 const destroy = (req, res, next) => {
   const id = parseInt(req.params.id);
+  if (isNaN(id)) {
+    res.status(400).json({ error: 'Invalid ID' });
+    return;
+  }
 
-  client.query('DELETE FROM products WHERE id = $1', [id], (error, results) => {
+  client.query('DELETE FROM cart WHERE id = $1', [id], (error, results) => {
     if (error) {
       next(error);
     } else if (results.rowCount === 0) {
-      res.status(404).json({ error: 'Product not found' });
+      res.status(404).json({ error: 'Cart item not found' });
     } else {
-      res.status(200).json({ message: `Product deleted with ID: ${id}` });
+      res.status(200).json({ message: `Cart item deleted with ID: ${id}` });
     }
   });
 };
