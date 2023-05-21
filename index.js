@@ -3,10 +3,12 @@ const express = require('express')
 const app = express()
 const port = 3000
 const usersRoutes = require('./routes/usersRoutes');
+const productsRoutes = require('./routes/productsRoutes');
 
 app.use(express.json());
 
 app.use('/users', usersRoutes);
+app.use('/products', productsRoutes);
 
 app.get('/', (request, response) => {
   response.json({ info: 'This is my E-commerce Rest API!' })
