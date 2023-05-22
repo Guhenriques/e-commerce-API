@@ -67,6 +67,7 @@ const update = (req, res, next) => {
 
 const destroy = (req, res, next) => {
   const id = parseInt(req.params.id);
+  // check if the value parsed is a integer or not
   if (isNaN(id)) {
     res.status(400).json({ error: 'Invalid ID' });
     return;
