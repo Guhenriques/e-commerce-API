@@ -29,11 +29,11 @@ const getOrderDetails = (req, res, next) => {
 };
 
 const createOrder = (req, res, next) => {
-  const { user_id, product_id, quantity } = req.body;
+  const { user_id, product_id, cart_id } = req.body;
 
   client.query(
-    'INSERT INTO orders (user_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING id',
-    [user_id, product_id, quantity],
+    'INSERT INTO orders (user_id, product_id, cart_id) VALUES ($1, $2, $3) RETURNING id',
+    [user_id, product_id, cart_id],
     (error, results) => {
       if (error) {
         next(error);
@@ -46,11 +46,11 @@ const createOrder = (req, res, next) => {
 
 const updateOrder = (req, res, next) => {
   const orderId = parseInt(req.params.orderId);
-  const { user_id, product_id, quantity } = req.body;
+  const { user_id, product_id, cart_id } = req.body;
 
   client.query(
-    'UPDATE orders SET user_id = $1, product_id = $2, quantity = $3 WHERE id = $4',
-    [user_id, product_id, quantity, orderId],
+    'UPDATE orders SET user_id = $1, product_id = $2, WHERE id = $3',
+    [user_id, product_id, cart_id, orderId],
     (error, results) => {
       if (error) {
         next(error);

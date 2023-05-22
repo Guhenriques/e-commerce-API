@@ -29,16 +29,17 @@ const show = (req, res, next) => {
 };
 
 const create = (req, res, next) => {
-  const { user_id, product_id, quantity } = req.body;
+  const { user_id, product_id, cart_id, total_price } = req.body;
 
   client.query(
-    'INSERT INTO cart (user_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING id',
-    [user_id, product_id, quantity],
+    'INSERT INTO orders (user_id, product_id, cart_id, total_price) VALUES ($1, $2, $3, $4) RETURNING id',
+    [user_id, product_id, cart_id, total_price],
     (error, results) => {
       if (error) {
         next(error);
       } else {
-        res.status(201).json({ id: results.rows[0].id });
+        const orderId = results.rows[0].id;
+        res.status(201).json({ id: orderId });
       }
     }
   );
@@ -46,11 +47,11 @@ const create = (req, res, next) => {
 
 const update = (req, res, next) => {
   const id = parseInt(req.params.id);
-  const { product_id, quantity } = req.body;
+  const { product_id } = req.body;
 
   client.query(
-    'UPDATE cart SET product_id = $1, quantity = $2 WHERE id = $3',
-    [product_id, quantity, id],
+    'UPDATE cart SET product_id = $1 WHERE id = $2',
+    [product_id, id],
     (error, results) => {
       if (error) {
         next(error);
@@ -64,6 +65,7 @@ const update = (req, res, next) => {
     }
   );
 };
+
 
 const destroy = (req, res, next) => {
   const id = parseInt(req.params.id);
