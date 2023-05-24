@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+const swaggerUI = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
 const usersRoutes = require('./routes/usersRoutes');
 const productsRoutes = require('./routes/productsRoutes');
 const cartRoutes = require('./routes/cartRoutes');
@@ -28,6 +31,8 @@ app.use('/cart', cartRoutes);
 app.use('/orders', ordersRoutes);
 app.use('/checkout', checkoutRoutes);
 app.use('/login', loginRouter);
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.get('/', (request, response) => {
   response.json({ info: 'This is my E-commerce Rest API!' })

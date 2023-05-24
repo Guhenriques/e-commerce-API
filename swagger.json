@@ -1,0 +1,64 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "E-Commerce REST API",
+    "description": "A REST API Built with Node/Express and PostgreSQL for an E-Commerce App",
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "paths": {
+    "/products": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/products/newproduct": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "number"
+                  },
+                  "price": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Product already exists"
+          },
+          "201": {
+            "description": "Product created successfully"
+          }
+        }
+      }
+    }
+  }
+}

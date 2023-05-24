@@ -31,17 +31,35 @@ const create = (req, res, next) => {
   const { name, category, quantity, price } = req.body;
 
   client.query(
-    'INSERT INTO products (name, category, quantity, price) VALUES ($1, $2, $3, $4) RETURNING id',
-    [name, category, quantity, price],
+    'SELECT * FROM products WHERE name = $1',
+    [name],
     (error, results) => {
       if (error) {
         next(error);
       } else {
-        res.status(201).json({ id: results.rows[0].id });
+        if (results.rows.length > 0) {
+          // Product with the same name already exists
+          const errorMessage = 'Product already exists';
+          res.status(400).json({ error: errorMessage });
+        } else {
+          // Insert the new product
+          client.query(
+            'INSERT INTO products (name, category, quantity, price) VALUES ($1, $2, $3, $4) RETURNING id',
+            [name, category, quantity, price],
+            (error, results) => {
+              if (error) {
+                next(error);
+              } else {
+                res.status(201).json({ message: 'Product created successfully', id: results.rows[0].id });
+              }
+            }
+          );
+        }
       }
     }
   );
 };
+
 
 const update = (req, res, next) => {
   const id = parseInt(req.params.id);
