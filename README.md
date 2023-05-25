@@ -16,4 +16,4 @@ Project is created with:
 
 # Screenshots
 
-![Swagger image documentation with CRUD operations.](https://drive.google.com/file/d/11Utb_3x_l_NZyF_t4iLl93oePNexF8c_/view)
+![Swagger image documentation with CRUD operations.](https://github.com/Guhenriques/e-commerce-API/assets/23385710/0c183b16-af12-48da-857b-1c54c60b6f14)
