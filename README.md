@@ -9,7 +9,11 @@ I'm still working on it.
 # Technologies
 Project is created with:
 
-express v4.18.2
-node.js v18.13.0
-npm v9.4.0
-PostgreSQL v15.2
+- express v4.18.2
+- node.js v18.13.0
+- npm v9.4.0
+- PostgreSQL v15.2
+
+# Screenshots
+
+![Swagger image documentation with CRUD operations, (https://prnt.sc/MBX2Lxtr3fzA)]
