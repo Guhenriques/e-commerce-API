@@ -5,12 +5,12 @@ const port = 3000
 const swaggerUI = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
-const usersRoutes = require('./routes/usersRoutes');
-const productsRoutes = require('./routes/productsRoutes');
-const cartRoutes = require('./routes/cartRoutes');
-const ordersRoutes = require('./routes/ordersRoutes');
-const checkoutRoutes = require('./routes/checkoutRoutes');
-const loginRouter = require('./routes/authRoute');
+const usersRoutes = require('./server/routes/usersRoutes');
+const productsRoutes = require('./server/routes/productsRoutes');
+const cartRoutes = require('./server/routes/cartRoutes');
+const ordersRoutes = require('./server/routes/ordersRoutes');
+const checkoutRoutes = require('./server/routes/checkoutRoutes');
+const loginRouter = require('./server/routes/authRoute');
 
 const passport = require('passport');
 const session = require('express-session');
