@@ -17,3 +17,6 @@ Project is created with:
 # Screenshots
 
 ![Swagger image documentation with CRUD operations.](https://github.com/Guhenriques/e-commerce-API/assets/23385710/0c183b16-af12-48da-857b-1c54c60b6f14)
+
+
+This project was based on Codecademy's back-end portfolio project in the Full-Stack Engineer Career Path.
