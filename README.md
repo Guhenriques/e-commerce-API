@@ -16,4 +16,4 @@ Project is created with:
 
 # Screenshots
 
-![Swagger image documentation with CRUD operations, (https://prnt.sc/MBX2Lxtr3fzA)]
+![Swagger image documentation with CRUD operations.](https://prnt.sc/MBX2Lxtr3fzA)
