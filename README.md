@@ -13,6 +13,7 @@ Project is created with:
 - node.js v18.13.0
 - npm v9.4.0
 - PostgreSQL v15.2
+- Javascript
 
 # Screenshots
 
