@@ -9,7 +9,7 @@ router.get('/', productsController.index);
 router.get('/:id', productsController.show);
 
 // Create new product
-router.post('/newproduct', productsController.create);
+router.post('/', productsController.create);
 
 // Update a specific product
 router.put('/:id', productsController.update);

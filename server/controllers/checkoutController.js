@@ -1,4 +1,4 @@
-const client = require('../db');
+const client = require('../database/db');
 
 const checkout = (req, res, next) => {
   const cartId = parseInt(req.params.cartId);

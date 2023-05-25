@@ -1,4 +1,4 @@
-const client = require('../db');
+const client = require('../database/db');
 
 const index = (req, res, next) => {
   client.query('SELECT * FROM products ORDER BY id ASC', (error, results) => {

@@ -1,4 +1,4 @@
-const client = require('../db');
+const client = require('../database/db');
 const bcrypt = require('bcrypt');
 
 const index = (req, res, next) => {

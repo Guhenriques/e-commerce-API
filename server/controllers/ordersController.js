@@ -1,4 +1,4 @@
-const client = require('../db');
+const client = require('../database/db');
 
 const getOrderHistory = (req, res, next) => {
   client.query('SELECT * FROM orders ORDER BY id DESC', (error, results) => {
