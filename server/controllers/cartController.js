@@ -73,7 +73,7 @@ const destroy = (req, res, next) => {
   if (isNaN(id)) {
     res.status(400).json({ error: 'Invalid ID' });
     return;
-  } // test
+  }
 
   client.query('DELETE FROM cart WHERE id = $1', [id], (error, results) => {
     if (error) {
