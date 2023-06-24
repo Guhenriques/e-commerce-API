@@ -4,8 +4,6 @@
 
 A E-Commerce application REST API that allows users to perform basic CRUD operations such as login having a exist user, browsing for products, see their carts and checkout orders.
 
-I'm still working on it.
-
 # Technologies
 Project is created with:
 
